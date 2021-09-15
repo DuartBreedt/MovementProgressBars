@@ -1,0 +1,31 @@
+<idea-plugin>
+    <id>org.example.MovementProgressBars</id>
+    <name>Movement</name>
+    <vendor email="duartbreedt@gmail.com" url="https://github.com/DuartBreedt">DuartBreedt</vendor>
+
+    <description><![CDATA[
+    LGBTQIA+ progress bars!<br/>
+    This includes:
+    <ul>
+        <li>Classic pride</li>
+        <li>Transgender <em>Coming Soon!</em></li>
+        <li>Bear Subculture <em>Coming Soon!</em></li>
+    </ul>
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+
+    <application-components>
+        <component>
+            <implementation-class>MovementApplicationComponent</implementation-class>
+        </component>
+    </application-components>
+</idea-plugin>
