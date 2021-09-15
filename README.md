@@ -1,5 +1,16 @@
-# NyanProgressBar
+# Movement Progress Bars
 
-A pretty nyan cat progress bar for IntelliJ IDEA and other JetBrains IDEs.
+LGBTQIA+ progress bars!
 
-[Page on plugin repository site](https://plugins.jetbrains.com/plugin/8575-nyan-progress-bar)
+This includes:
+<ul>
+    <li>Classic pride</li>
+    <li>Transgender <em>(Coming Soon!)</em></li>
+    <li>Bear Subculture <em>(Coming Soon!)</em></li>
+</ul>
+
+[Intelij Plugin](#)
+
+
+## Setup
+- Requires JDK 11
