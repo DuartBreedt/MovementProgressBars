@@ -1,3 +1,5 @@
+package com.duartbreedt.movementprogressbars;
+
 import com.intellij.ide.ui.LafManagerListener;
 import com.intellij.openapi.application.ApplicationManager;
 

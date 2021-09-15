@@ -1,3 +1,5 @@
+package com.duartbreedt.movementprogressbars;
+
 import com.intellij.openapi.util.IconLoader;
 
 import javax.swing.*;

@@ -20,12 +20,19 @@
     </extensions>
 
     <actions>
-        <!-- Add your actions here -->
+
+        <group id="ViewMovementProgressBarsPlugin" text="Movement" description="Settings for Movement progress bars" popup="true" compact="true">
+            <add-to-group group-id="ViewMenu" anchor="after" relative-to-action="ViewAppearanceGroup"/>
+            <action class="com.duartbreedt.movementprogressbars.SetFlagToClassicPrideAction"
+                    id="Movement.Actions.ChangeFlag.ClassicPride" text="Classic Pride"/>
+        </group>
+
     </actions>
 
     <application-components>
         <component>
-            <implementation-class>MovementApplicationComponent</implementation-class>
+            <implementation-class>com.duartbreedt.movementprogressbars.MovementApplicationComponent
+            </implementation-class>
         </component>
     </application-components>
 </idea-plugin>

@@ -1,3 +1,5 @@
+package com.duartbreedt.movementprogressbars;
+
 import com.intellij.openapi.ui.GraphicsConfig;
 import com.intellij.openapi.util.ScalableIcon;
 import com.intellij.ui.Gray;
@@ -18,10 +20,19 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
+import java.nio.FloatBuffer;
+import java.util.LinkedList;
 
 public class MovementProgressBarUi extends BasicProgressBarUI {
-    private static final float ONE_OVER_SEVEN = 1f / 7;
-    private static final Color VIOLET = new JBColor(new Color(90, 0, 157), new Color(90, 0, 157));
+    private static final float ONE_OVER_SIX = 1f / 6;
+    private static final Color RED = new JBColor(new Color(221, 3, 3), new Color(221, 3, 3));
+    private static final Color ORANGE = new JBColor(new Color(247, 136, 0), new Color(247, 136, 0));
+    private static final Color YELLOW = new JBColor(new Color(247, 230, 0), new Color(247, 230, 0));
+    private static final Color GREEN = new JBColor(new Color(0, 124, 37), new Color(0, 124, 37));
+    private static final Color BLUE = new JBColor(new Color(0, 75, 247), new Color(0, 75, 247));
+    private static final Color VIOLET = new JBColor(new Color(113, 7, 131), new Color(113, 7, 131));
+    private static final Color[] COLORS = new Color[]{RED, ORANGE, YELLOW, GREEN, BLUE, VIOLET};
+
     private static final int BAR_HEIGHT = 20;
 
     private volatile int offset = 0;
@@ -68,8 +79,9 @@ public class MovementProgressBarUi extends BasicProgressBarUI {
         Graphics2D graphics2D = (Graphics2D) graphics;
 
         Insets borderInsets = progressBar.getInsets(); // area for border
+        float heightOffset = (borderInsets.top + borderInsets.bottom) / 2f;
         int barRectWidth = progressBar.getWidth() - (borderInsets.right + borderInsets.left);
-        int barRectHeight = progressBar.getHeight() - (borderInsets.top + borderInsets.bottom);
+        int barRectHeight = (int) (progressBar.getHeight() - (heightOffset * 2));
 
         if (barRectWidth <= 0 || barRectHeight <= 0) {
             return;
@@ -80,7 +92,7 @@ public class MovementProgressBarUi extends BasicProgressBarUI {
         int height = component.getPreferredSize().height;
         if (isOdd(component.getHeight() - height)) height++;
 
-        LinearGradientPaint baseRainbowPaint = createFlagPaint(height);
+        LinearGradientPaint baseRainbowPaint = createFlagPaint(COLORS, height, heightOffset);
 
         graphics2D.setPaint(baseRainbowPaint);
 
@@ -148,57 +160,58 @@ public class MovementProgressBarUi extends BasicProgressBarUI {
     }
 
     @Override
-    protected void paintDeterminate(Graphics g, JComponent c) {
-        if (!(g instanceof Graphics2D)) {
+    protected void paintDeterminate(Graphics graphics, JComponent component) {
+        if (!(graphics instanceof Graphics2D)) {
             return;
         }
 
-        if (progressBar.getOrientation() != SwingConstants.HORIZONTAL || !c.getComponentOrientation().isLeftToRight()) {
-            super.paintDeterminate(g, c);
+        if (progressBar.getOrientation() != SwingConstants.HORIZONTAL || !component.getComponentOrientation().isLeftToRight()) {
+            super.paintDeterminate(graphics, component);
             return;
         }
-        final GraphicsConfig config = GraphicsUtil.setupAAPainting(g);
-        Insets b = progressBar.getInsets(); // area for border
-        int w = progressBar.getWidth();
-        int h = progressBar.getPreferredSize().height;
-        if (isOdd(c.getHeight() - h)) h++;
+        final GraphicsConfig config = GraphicsUtil.setupAAPainting(graphics);
+        Insets borderInsets = progressBar.getInsets(); // area for border
+        float heightOffset = (borderInsets.top + borderInsets.bottom) / 2f;
+        int width = progressBar.getWidth();
+        int height = progressBar.getPreferredSize().height;
+        if (isOdd(component.getHeight() - height)) height++;
 
-        int barRectWidth = w - (b.right + b.left);
-        int barRectHeight = h - (b.top + b.bottom);
+        int barRectWidth = width - (borderInsets.right + borderInsets.left);
+        int barRectHeight = (int) (height - (heightOffset * 2));
 
         if (barRectWidth <= 0 || barRectHeight <= 0) {
             return;
         }
 
-        int amountFull = getAmountFull(b, barRectWidth, barRectHeight);
+        int amountFull = getAmountFull(borderInsets, barRectWidth, barRectHeight);
 
-        Container parent = c.getParent();
+        Container parent = component.getParent();
         Color background = parent != null ? parent.getBackground() : UIUtil.getPanelBackground();
 
-        g.setColor(background);
-        Graphics2D g2 = (Graphics2D) g;
-        if (c.isOpaque()) {
-            g.fillRect(0, 0, w, h);
+        graphics.setColor(background);
+        Graphics2D graphics2D = (Graphics2D) graphics;
+        if (component.isOpaque()) {
+            graphics.fillRect(0, 0, width, height);
         }
 
         final float R = JBUIScale.scale(8f);
         final float R2 = JBUIScale.scale(9f);
         final float off = JBUIScale.scale(1f);
 
-        g2.translate(0, (c.getHeight() - h) / 2);
-        g2.setColor(progressBar.getForeground());
-        g2.fill(new RoundRectangle2D.Float(0, 0, w - off, h - off, R2, R2));
-        g2.setColor(background);
-        g2.fill(new RoundRectangle2D.Float(off, off, w - 2f * off - off, h - 2f * off - off, R, R));
-        g2.setPaint(createFlagPaint(h));
+        graphics2D.translate(0, (component.getHeight() - height) / 2);
+        graphics2D.setColor(progressBar.getForeground());
+        graphics2D.fill(new RoundRectangle2D.Float(0, 0, width - off, height - off, R2, R2));
+        graphics2D.setColor(background);
+        graphics2D.fill(new RoundRectangle2D.Float(off, off, width - 2f * off - off, height - 2f * off - off, R, R));
+        graphics2D.setPaint(createFlagPaint(COLORS, height, heightOffset));
 
-        MovementIcons.CAT_ICON.paintIcon(progressBar, g2, amountFull - JBUI.scale(10), -JBUI.scale(6));
-        g2.fill(new RoundRectangle2D.Float(2f * off, 2f * off, amountFull - JBUIScale.scale(5f), h - JBUIScale.scale(5f), JBUIScale.scale(7f), JBUIScale.scale(7f)));
-        g2.translate(0, -(c.getHeight() - h) / 2);
+        MovementIcons.CAT_ICON.paintIcon(progressBar, graphics2D, amountFull - JBUI.scale(10), -JBUI.scale(6));
+        graphics2D.fill(new RoundRectangle2D.Float(2f * off, 2f * off, amountFull - JBUIScale.scale(5f), height - JBUIScale.scale(5f), JBUIScale.scale(7f), JBUIScale.scale(7f)));
+        graphics2D.translate(0, -(component.getHeight() - height) / 2);
 
         // Deal with possible text painting
         if (progressBar.isStringPainted()) {
-            paintString(g, b.left, b.top, barRectWidth, barRectHeight, amountFull, b);
+            paintString(graphics, borderInsets.left, borderInsets.top, barRectWidth, barRectHeight, amountFull, borderInsets);
         }
         config.restore();
     }
@@ -238,10 +251,35 @@ public class MovementProgressBarUi extends BasicProgressBarUI {
         return availableLength;
     }
 
-    private LinearGradientPaint createFlagPaint(int height) {
-        return new LinearGradientPaint(0, JBUI.scale(2), 0, height - JBUI.scale(6),
-                new float[]{ONE_OVER_SEVEN * 1, ONE_OVER_SEVEN * 2, ONE_OVER_SEVEN * 3, ONE_OVER_SEVEN * 4, ONE_OVER_SEVEN * 5, ONE_OVER_SEVEN * 6, ONE_OVER_SEVEN * 7},
-                new Color[]{JBColor.RED, JBColor.ORANGE, JBColor.YELLOW, JBColor.GREEN, JBColor.CYAN, JBColor.BLUE, VIOLET});
+    private LinearGradientPaint createFlagPaint(Color[] colors, int height, float heightOffset) {
+        float fadeFactor = 0.01f;
+
+        LinkedList<Float> fractionsList = new LinkedList<Float>();
+        LinkedList<Color> colorsList = new LinkedList<Color>();
+
+        for (int i = 0; i < colors.length; i++) {
+            if (i == 0) { // First item
+                fractionsList.add(ONE_OVER_SIX * i);
+                fractionsList.add(ONE_OVER_SIX * (i + 1) - fadeFactor);
+            } else if (i == colors.length - 1) { // Last item
+                fractionsList.add(ONE_OVER_SIX * i + fadeFactor);
+                fractionsList.add(ONE_OVER_SIX * (i + 1));
+            } else { // Middle item(s)
+                fractionsList.add(ONE_OVER_SIX * i + fadeFactor);
+                fractionsList.add(ONE_OVER_SIX * (i + 1) - fadeFactor);
+            }
+            colorsList.add(colors[i]);
+            colorsList.add(colors[i]);
+        }
+
+        return new LinearGradientPaint(0, heightOffset, 0, height - heightOffset,
+                fractionsList.stream().collect(
+                        () -> FloatBuffer.allocate(fractionsList.size()),
+                        FloatBuffer::put,
+                        (left, right) -> {
+                            throw new UnsupportedOperationException("Can only be called in parallel stream");
+                        }).array(),
+                colorsList.toArray(new Color[0]));
     }
 
     private int getPeriodLength() {
