@@ -118,11 +118,13 @@ public class MovementProgressBarUi extends BasicProgressBarUI {
         Shape innerLoaderShape = new RoundRectangle2D.Float(0 + uiStrokeWidth, 0 + uiStrokeWidth, progress, flagHeight, uiInnerLoaderCornerRadius, uiInnerLoaderCornerRadius);
         Shape strokeShape = new RoundRectangle2D.Float(0, 0, componentWidth - uiStrokeWidth, componentHeight - uiStrokeWidth, uiComponentCornerRadius, uiComponentCornerRadius);
 
+        // FIXME: Figure out why this exception is being thrown
         try {
             graphics2D.setPaint(createFlagPaint(colors, (int) flagHeight));
         } catch (Exception e) {
             // Swallow
         }
+
         graphics2D.fill(innerLoaderShape);
         graphics2D.setColor(progressBar.getForeground());
         graphics2D.draw(strokeShape);
