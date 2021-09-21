@@ -1,6 +1,5 @@
 package com.duartbreedt.movementprogressbars;
 
-import com.esotericsoftware.minlog.Log;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.ui.GraphicsConfig;
 import com.intellij.ui.scale.JBUIScale;
@@ -16,21 +15,10 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.nio.FloatBuffer;
 import java.util.LinkedList;
 
 public class MovementProgressBarUi extends BasicProgressBarUI {
-//    private static final float ONE_OVER_SIX = 1f / 6;
-//    private static final Color RED = new JBColor(new Color(221, 3, 3), new Color(221, 3, 3));
-//    private static final Color ORANGE = new JBColor(new Color(247, 136, 0), new Color(247, 136, 0));
-//    private static final Color YELLOW = new JBColor(new Color(247, 230, 0), new Color(247, 230, 0));
-//    private static final Color GREEN = new JBColor(new Color(0, 124, 37), new Color(0, 124, 37));
-//    private static final Color BLUE = new JBColor(new Color(0, 75, 247), new Color(0, 75, 247));
-//    private static final Color VIOLET = new JBColor(new Color(113, 7, 131), new Color(113, 7, 131));
-//    private static final Color[] COLORS = new Color[]{RED, ORANGE, YELLOW, GREEN, BLUE, VIOLET};
-
-    private static final Flag DEFAULT_FLAG = Flag.TEST;
 
     private static final int BAR_HEIGHT = 20;
     private static final int STROKE_WIDTH = 1;
@@ -101,8 +89,9 @@ public class MovementProgressBarUi extends BasicProgressBarUI {
             return;
         }
 
+        // TODO Extract
         if (colors == null || colors.length == 0) {
-            String enumValue = PropertiesComponent.getInstance().getValue(FlagColor.KEY);
+            String enumValue = PropertiesComponent.getInstance().getValue(FlagColor.PROPERTY_KEY);
             FlagColor flagColor;
             try {
                 Class<?> clazz = Class.forName(enumValue);
@@ -113,20 +102,8 @@ public class MovementProgressBarUi extends BasicProgressBarUI {
                 flagColor = new ClassicPride();
             }
 
-//            Flag flag = enumValue != null ? Flag.valueOf(enumValue) : DEFAULT_FLAG;
-
             colors = flagColor.getColors();
             colorFraction = 1f / colors.length;
-
-//            MovementSettingsService service = ApplicationManager.getApplication().getService(MovementSettingsService.class);
-//            MovementSettingsService.State state = service.getState();
-
-//            if (state != null) {
-//                colors = state.colors;
-//                colorFraction = 1f / state.colors.length;
-//            } else {
-//                return;
-//            }
         }
 
         int componentWidth = progressBar.getWidth();
@@ -143,7 +120,7 @@ public class MovementProgressBarUi extends BasicProgressBarUI {
 
         try {
             graphics2D.setPaint(createFlagPaint(colors, (int) flagHeight));
-        } catch( Exception e) {
+        } catch (Exception e) {
             // Swallow
         }
         graphics2D.fill(innerLoaderShape);
@@ -164,8 +141,8 @@ public class MovementProgressBarUi extends BasicProgressBarUI {
     private LinearGradientPaint createFlagPaint(Color[] colors, int height) {
         float fadeFactor = 0.01f;
 
-        LinkedList<Float> fractionsList = new LinkedList<Float>();
-        LinkedList<Color> colorsList = new LinkedList<Color>();
+        LinkedList<Float> fractionsList = new LinkedList<>();
+        LinkedList<Color> colorsList = new LinkedList<>();
 
         for (int i = 0; i < colors.length; i++) {
             if (i == 0) { // First item

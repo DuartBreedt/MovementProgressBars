@@ -3,7 +3,6 @@ package com.duartbreedt.movementprogressbars;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.application.ApplicationManager;
 import org.jetbrains.annotations.NotNull;
 
 public class SetFlagToClassicPrideAction extends AnAction {
@@ -16,7 +15,7 @@ public class SetFlagToClassicPrideAction extends AnAction {
 //            state.colors = ClassicPride.getColors();
 //        }
 
-        PropertiesComponent.getInstance().setValue(FlagColor.KEY, ClassicPride.class.getName());
+        PropertiesComponent.getInstance().setValue(FlagColor.PROPERTY_KEY, ClassicPride.class.getName());
     }
 
     @Override

@@ -4,7 +4,7 @@ import java.awt.*;
 
 public interface FlagColor {
 
-    final static String KEY = "movementFlag";
+    String PROPERTY_KEY = "movementFlag";
 
     Color[] getColors();
 }
