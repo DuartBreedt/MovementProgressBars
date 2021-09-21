@@ -1,10 +1,12 @@
 package com.duartbreedt.movementprogressbars;
 
+import com.esotericsoftware.minlog.Log;
+import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.ui.GraphicsConfig;
-import com.intellij.ui.JBColor;
 import com.intellij.ui.scale.JBUIScale;
 import com.intellij.util.ui.GraphicsUtil;
 import com.intellij.util.ui.JBUI;
+import org.jetbrains.annotations.Contract;
 
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
@@ -13,18 +15,22 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.geom.RoundRectangle2D;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.FloatBuffer;
 import java.util.LinkedList;
 
 public class MovementProgressBarUi extends BasicProgressBarUI {
-    private static final float ONE_OVER_SIX = 1f / 6;
-    private static final Color RED = new JBColor(new Color(221, 3, 3), new Color(221, 3, 3));
-    private static final Color ORANGE = new JBColor(new Color(247, 136, 0), new Color(247, 136, 0));
-    private static final Color YELLOW = new JBColor(new Color(247, 230, 0), new Color(247, 230, 0));
-    private static final Color GREEN = new JBColor(new Color(0, 124, 37), new Color(0, 124, 37));
-    private static final Color BLUE = new JBColor(new Color(0, 75, 247), new Color(0, 75, 247));
-    private static final Color VIOLET = new JBColor(new Color(113, 7, 131), new Color(113, 7, 131));
-    private static final Color[] COLORS = new Color[]{RED, ORANGE, YELLOW, GREEN, BLUE, VIOLET};
+//    private static final float ONE_OVER_SIX = 1f / 6;
+//    private static final Color RED = new JBColor(new Color(221, 3, 3), new Color(221, 3, 3));
+//    private static final Color ORANGE = new JBColor(new Color(247, 136, 0), new Color(247, 136, 0));
+//    private static final Color YELLOW = new JBColor(new Color(247, 230, 0), new Color(247, 230, 0));
+//    private static final Color GREEN = new JBColor(new Color(0, 124, 37), new Color(0, 124, 37));
+//    private static final Color BLUE = new JBColor(new Color(0, 75, 247), new Color(0, 75, 247));
+//    private static final Color VIOLET = new JBColor(new Color(113, 7, 131), new Color(113, 7, 131));
+//    private static final Color[] COLORS = new Color[]{RED, ORANGE, YELLOW, GREEN, BLUE, VIOLET};
+
+    private static final Flag DEFAULT_FLAG = Flag.TEST;
 
     private static final int BAR_HEIGHT = 20;
     private static final int STROKE_WIDTH = 1;
@@ -37,14 +43,14 @@ public class MovementProgressBarUi extends BasicProgressBarUI {
     private static final int progressIncrements = 1;
     private int indeterminateProgress = 0;
 
+    private Color[] colors;
+    private float colorFraction;
+
+    @Contract("_ -> new")
     @SuppressWarnings({"UnusedDeclaration"})
     public static ComponentUI createUI(JComponent component) {
         component.setBorder(JBUI.Borders.empty().asUIResource());
         return new MovementProgressBarUi();
-    }
-
-    private static boolean isOdd(int value) {
-        return value % 2 == 1;
     }
 
     @Override
@@ -95,6 +101,34 @@ public class MovementProgressBarUi extends BasicProgressBarUI {
             return;
         }
 
+        if (colors == null || colors.length == 0) {
+            String enumValue = PropertiesComponent.getInstance().getValue(FlagColor.KEY);
+            FlagColor flagColor;
+            try {
+                Class<?> clazz = Class.forName(enumValue);
+                Constructor<?> ctor = clazz.getConstructor();
+                flagColor = (FlagColor) ctor.newInstance();
+            } catch (Exception e) {
+                // Swallow
+                flagColor = new ClassicPride();
+            }
+
+//            Flag flag = enumValue != null ? Flag.valueOf(enumValue) : DEFAULT_FLAG;
+
+            colors = flagColor.getColors();
+            colorFraction = 1f / colors.length;
+
+//            MovementSettingsService service = ApplicationManager.getApplication().getService(MovementSettingsService.class);
+//            MovementSettingsService.State state = service.getState();
+
+//            if (state != null) {
+//                colors = state.colors;
+//                colorFraction = 1f / state.colors.length;
+//            } else {
+//                return;
+//            }
+        }
+
         int componentWidth = progressBar.getWidth();
         int componentHeight = progressBar.getPreferredSize().height;
         float flagHeight = componentHeight - (uiStrokeWidth * 2);
@@ -107,7 +141,11 @@ public class MovementProgressBarUi extends BasicProgressBarUI {
         Shape innerLoaderShape = new RoundRectangle2D.Float(0 + uiStrokeWidth, 0 + uiStrokeWidth, progress, flagHeight, uiInnerLoaderCornerRadius, uiInnerLoaderCornerRadius);
         Shape strokeShape = new RoundRectangle2D.Float(0, 0, componentWidth - uiStrokeWidth, componentHeight - uiStrokeWidth, uiComponentCornerRadius, uiComponentCornerRadius);
 
-        graphics2D.setPaint(createFlagPaint(COLORS, (int) flagHeight));
+        try {
+            graphics2D.setPaint(createFlagPaint(colors, (int) flagHeight));
+        } catch( Exception e) {
+            // Swallow
+        }
         graphics2D.fill(innerLoaderShape);
         graphics2D.setColor(progressBar.getForeground());
         graphics2D.draw(strokeShape);
@@ -131,27 +169,27 @@ public class MovementProgressBarUi extends BasicProgressBarUI {
 
         for (int i = 0; i < colors.length; i++) {
             if (i == 0) { // First item
-                fractionsList.add(ONE_OVER_SIX * i);
-                fractionsList.add(ONE_OVER_SIX * (i + 1) - fadeFactor);
+                fractionsList.add(colorFraction * i);
+                fractionsList.add(colorFraction * (i + 1) - fadeFactor);
             } else if (i == colors.length - 1) { // Last item
-                fractionsList.add(ONE_OVER_SIX * i + fadeFactor);
-                fractionsList.add(ONE_OVER_SIX * (i + 1));
+                fractionsList.add(colorFraction * i + fadeFactor);
+                fractionsList.add(colorFraction * (i + 1));
             } else { // Middle item(s)
-                fractionsList.add(ONE_OVER_SIX * i + fadeFactor);
-                fractionsList.add(ONE_OVER_SIX * (i + 1) - fadeFactor);
+                fractionsList.add(colorFraction * i + fadeFactor);
+                fractionsList.add(colorFraction * (i + 1) - fadeFactor);
             }
             colorsList.add(colors[i]);
             colorsList.add(colors[i]);
         }
 
-        return new LinearGradientPaint(0, 0, 0, height,
-                fractionsList.stream().collect(
-                        () -> FloatBuffer.allocate(fractionsList.size()),
-                        FloatBuffer::put,
-                        (left, right) -> {
-                            throw new UnsupportedOperationException("Can only be called in parallel stream");
-                        }).array(),
-                colorsList.toArray(new Color[0]));
+        float[] fractions = fractionsList.stream().collect(
+                () -> FloatBuffer.allocate(fractionsList.size()),
+                FloatBuffer::put,
+                (left, right) -> {
+                    throw new UnsupportedOperationException("Can only be called in parallel stream");
+                }).array();
+        Color[] colorArray = colorsList.toArray(new Color[0]);
+        return new LinearGradientPaint(0, 0, 0, height, fractions, colorArray);
     }
 }
 
