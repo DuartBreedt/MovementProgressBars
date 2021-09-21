@@ -8,8 +8,7 @@
     This includes:
     <ul>
         <li>Classic pride</li>
-        <li>Transgender <em>Coming Soon!</em></li>
-        <li>Bear Subculture <em>Coming Soon!</em></li>
+        <li>Transgender</li>
     </ul>
     ]]></description>
 
@@ -22,8 +21,12 @@
 
         <group id="ViewMovementProgressBarsPlugin" text="Movement" description="Settings for Movement progress bars" popup="true" compact="true">
             <add-to-group group-id="ViewMenu" anchor="after" relative-to-action="ViewAppearanceGroup"/>
+
             <action class="com.duartbreedt.movementprogressbars.SetFlagToClassicPrideAction"
                     id="Movement.Actions.ChangeFlag.ClassicPride" text="Classic Pride" icon="/classic_pride.svg"/>
+
+            <action class="com.duartbreedt.movementprogressbars.SetFlagToTransgenderAction"
+                    id="Movement.Actions.ChangeFlag.Transgender" text="Transgender" icon="/transgender.svg"/>
         </group>
 
     </actions>

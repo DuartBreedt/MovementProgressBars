@@ -4,15 +4,15 @@ plugins {
 }
 
 group 'org.example'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.0'
 }
 
 intellij {
@@ -26,4 +26,14 @@ patchPluginXml {
 
 test {
     useJUnitPlatform()
+}
+
+signPlugin {
+    certificateChain = System.getenv("CERTIFICATE_CHAIN")
+    privateKey = System.getenv("PRIVATE_KEY")
+    password = System.getenv("PRIVATE_KEY_PASSWORD")
+}
+
+publishPlugin {
+    token = System.getenv("PUBLISH_TOKEN")
 }

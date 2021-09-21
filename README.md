@@ -5,8 +5,7 @@ LGBTQIA+ progress bars!
 This includes:
 <ul>
     <li>Classic pride</li>
-    <li>Transgender <em>(Coming Soon!)</em></li>
-    <li>Bear Subculture <em>(Coming Soon!)</em></li>
+    <li>Transgender <em></em></li>
 </ul>
 
 [Intelij Plugin](#)
