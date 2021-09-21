@@ -16,7 +16,6 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.duartbreedt.movementprogressbars.MovementSettingsService"/>
     </extensions>
 
     <actions>
@@ -24,7 +23,7 @@
         <group id="ViewMovementProgressBarsPlugin" text="Movement" description="Settings for Movement progress bars" popup="true" compact="true">
             <add-to-group group-id="ViewMenu" anchor="after" relative-to-action="ViewAppearanceGroup"/>
             <action class="com.duartbreedt.movementprogressbars.SetFlagToClassicPrideAction"
-                    id="Movement.Actions.ChangeFlag.ClassicPride" text="Classic Pride"/>
+                    id="Movement.Actions.ChangeFlag.ClassicPride" text="Classic Pride" icon="/classic_pride.svg"/>
         </group>
 
     </actions>
