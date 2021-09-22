@@ -1,5 +1,6 @@
 package com.duartbreedt.movementprogressbars;
 
+import com.duartbreedt.movementprogressbars.colors.GayPride;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.ui.GraphicsConfig;
 import com.intellij.ui.scale.JBUIScale;
@@ -99,7 +100,7 @@ public class MovementProgressBarUi extends BasicProgressBarUI {
                 flagColor = (FlagColor) ctor.newInstance();
             } catch (Exception e) {
                 // Swallow
-                flagColor = new ClassicPride();
+                flagColor = new GayPride();
             }
 
             colors = flagColor.getColors();

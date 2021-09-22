@@ -1,5 +1,7 @@
-package com.duartbreedt.movementprogressbars;
+package com.duartbreedt.movementprogressbars.actions;
 
+import com.duartbreedt.movementprogressbars.FlagColor;
+import com.duartbreedt.movementprogressbars.colors.Transgender;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;

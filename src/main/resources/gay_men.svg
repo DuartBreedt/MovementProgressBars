@@ -1,0 +1,17 @@
+<!--
+	COPYRIGHT:
+	Creator: Rummskartoffel
+	License: None (public domain)
+	Based on:
+	https://gayflagblog.tumblr.com/post/186181118619/gay-man-flag-russian-%D1%80%D0%BE%D1%81%D1%81%D0%B8-%D1%8F-portuguese
+	by gayflagblog, in the public domain.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35 21" width="2000" height="1200">
+	<rect width="35" height="21" fill="#3e1a78" />
+	<rect width="35" height="18" fill="#5049cb" />
+	<rect width="35" height="15" fill="#7bade3" />
+	<rect width="35" height="12" fill="#ffffff" />
+	<rect width="35" height="9" fill="#99e8c2" />
+	<rect width="35" height="6" fill="#26ceaa" />
+	<rect width="35" height="3" fill="#078d70" />
+</svg>

@@ -1,10 +1,11 @@
-package com.duartbreedt.movementprogressbars;
+package com.duartbreedt.movementprogressbars.colors;
 
+import com.duartbreedt.movementprogressbars.FlagColor;
 import com.intellij.ui.JBColor;
 
 import java.awt.*;
 
-public class ClassicPride implements FlagColor {
+public class GayPride implements FlagColor {
 
     private static final Color RED = new JBColor(new Color(221, 3, 3), new Color(221, 3, 3));
     private static final Color ORANGE = new JBColor(new Color(247, 136, 0), new Color(247, 136, 0));

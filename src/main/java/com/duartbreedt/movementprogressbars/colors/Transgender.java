@@ -1,5 +1,6 @@
-package com.duartbreedt.movementprogressbars;
+package com.duartbreedt.movementprogressbars.colors;
 
+import com.duartbreedt.movementprogressbars.FlagColor;
 import com.intellij.ui.Gray;
 import com.intellij.ui.JBColor;
 
