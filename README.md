@@ -13,4 +13,8 @@ You can choose from:
 
 
 ## Setup
+- The Jetbrains Plugin can be found and installed from the Marketplace
+- The various flag options can be found in the following menu: <strong>View > Movement</strong>
+
+## Development
 - Requires JDK 11
