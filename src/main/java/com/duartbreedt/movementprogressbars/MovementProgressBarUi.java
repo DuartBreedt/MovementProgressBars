@@ -15,7 +15,6 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.geom.RoundRectangle2D;
-import java.lang.reflect.Constructor;
 import java.nio.FloatBuffer;
 import java.util.LinkedList;
 
@@ -90,22 +89,7 @@ public class MovementProgressBarUi extends BasicProgressBarUI {
             return;
         }
 
-        // TODO Extract
-        if (colors == null || colors.length == 0) {
-            String enumValue = PropertiesComponent.getInstance().getValue(FlagColor.PROPERTY_KEY);
-            FlagColor flagColor;
-            try {
-                Class<?> clazz = Class.forName(enumValue);
-                Constructor<?> ctor = clazz.getConstructor();
-                flagColor = (FlagColor) ctor.newInstance();
-            } catch (Exception e) {
-                // Swallow
-                flagColor = new GayPride();
-            }
-
-            colors = flagColor.getColors();
-            colorFraction = 1f / colors.length;
-        }
+        loadStoredColors();
 
         int componentWidth = progressBar.getWidth();
         int componentHeight = progressBar.getPreferredSize().height;
@@ -116,14 +100,14 @@ public class MovementProgressBarUi extends BasicProgressBarUI {
         progressBar.setBorder(JBUI.Borders.empty((int) uiStrokeWidth));
         progressBar.setBorderPainted(false);
 
-        Shape innerLoaderShape = new RoundRectangle2D.Float(0 + uiStrokeWidth, 0 + uiStrokeWidth, progress, flagHeight, uiInnerLoaderCornerRadius, uiInnerLoaderCornerRadius);
+        Shape innerLoaderShape = new RoundRectangle2D.Float(0 + uiStrokeWidth, 0 + uiStrokeWidth, clamp(progress, 0, componentWidth - uiStrokeWidth), flagHeight, uiInnerLoaderCornerRadius, uiInnerLoaderCornerRadius);
         Shape strokeShape = new RoundRectangle2D.Float(0, 0, componentWidth - uiStrokeWidth, componentHeight - uiStrokeWidth, uiComponentCornerRadius, uiComponentCornerRadius);
 
         // FIXME: Figure out why this exception is being thrown
         try {
             graphics2D.setPaint(createFlagPaint(colors, (int) flagHeight));
         } catch (Exception e) {
-            // Swallow
+            // NOOP
         }
 
         graphics2D.fill(innerLoaderShape);
@@ -136,11 +120,28 @@ public class MovementProgressBarUi extends BasicProgressBarUI {
         config.restore();
     }
 
+    private void loadStoredColors() {
+        if (colors == null || colors.length == 0) {
+            String enumValue = PropertiesComponent.getInstance().getValue(FlagColor.PROPERTY_KEY);
+            FlagColor flagColor;
+            try {
+                flagColor = (FlagColor) Class.forName(enumValue).getConstructor().newInstance();
+            } catch (Exception e) {
+                // NOOP
+                flagColor = new GayPride();
+            }
+
+            colors = flagColor.getColors();
+            colorFraction = 1f / colors.length;
+        }
+    }
+
     @Override
     protected int getBoxLength(int availableLength, int otherDimension) {
         return availableLength;
     }
 
+    // TODO: Add color proportions for irregular bands on flags
     private LinearGradientPaint createFlagPaint(Color[] colors, int height) {
         float fadeFactor = 0.01f;
 
@@ -170,6 +171,10 @@ public class MovementProgressBarUi extends BasicProgressBarUI {
                 }).array();
         Color[] colorArray = colorsList.toArray(new Color[0]);
         return new LinearGradientPaint(0, 0, 0, height, fractions, colorArray);
+    }
+
+    public static float clamp(float val, float min, float max) {
+        return Math.max(min, Math.min(max, val));
     }
 }
 

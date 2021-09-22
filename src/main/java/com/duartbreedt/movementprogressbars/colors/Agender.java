@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class Agender implements FlagColor {
 
-    private static final Color BLACK = JBColor.BLACK;
+    private static final Color BLACK = new JBColor(Gray._0, Gray._0);
     private static final Color GRAY = new JBColor(Gray._186, Gray._186);
     private static final Color WHITE = new JBColor(Gray._255, Gray._255);
     private static final Color GREEN = new JBColor(new Color(185, 244, 132), new Color(185, 244, 132));
