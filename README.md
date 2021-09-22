@@ -4,8 +4,8 @@ Adds LGBTQIA+ progress bars to your IDE!
 
 You can choose from:
 <ul>
-    <li>Classic pride</li>
-    <li>Transgender</li>
+    <li><img src="https://github.com/DuartBreedt/MovementProgressBars/blob/master/src/main/resources/classic_pride.svg" width="18px"/> Classic pride</li>
+    <li><img src="https://github.com/DuartBreedt/MovementProgressBars/blob/master/src/main/resources/transgender.svg" width="18px"/> Transgender</li>
 <li><em>And many more to come!</em></li>
 </ul>
 
