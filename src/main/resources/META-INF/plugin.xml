@@ -1,16 +1,22 @@
 <idea-plugin>
-    <id>org.example.MovementProgressBars</id>
+    <id>com.duartbreedt.movementprogressbars</id>
     <name>Movement</name>
     <vendor email="duartbreedt@gmail.com" url="https://github.com/DuartBreedt">DuartBreedt</vendor>
 
     <description><![CDATA[
-    LGBTQIA+ progress bars!<br/>
-    This includes:
+    <p>Adds LGBTQIA+ progress bars to your IDE!</p>
+    <br/>
+    <p>You can choose from:</p>
     <ul>
-        <li>Classic pride</li>
+        <li>Gay pride</li>
         <li>Transgender</li>
+        <li><em>And many more to come!</em></li>
     </ul>
     ]]></description>
+
+    <change-notes>Initial release of the plugin.</change-notes>
+
+    <version>1.0.0</version>
 
     <depends>com.intellij.modules.platform</depends>
 
@@ -33,7 +39,8 @@
 
     <application-components>
         <component>
-            <implementation-class>com.duartbreedt.movementprogressbars.MovementApplicationComponent
+            <implementation-class>
+                com.duartbreedt.movementprogressbars.MovementApplicationComponent
             </implementation-class>
         </component>
     </application-components>

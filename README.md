@@ -1,14 +1,15 @@
 # Movement Progress Bars
 
-LGBTQIA+ progress bars!
+Adds LGBTQIA+ progress bars to your IDE!
 
-This includes:
+You can choose from:
 <ul>
     <li>Classic pride</li>
-    <li>Transgender <em></em></li>
+    <li>Transgender</li>
+<li><em>And many more to come!</em></li>
 </ul>
 
-[Intelij Plugin](#)
+[Intelij Plugin](https://plugins.jetbrains.com/plugin/17648-movement)
 
 
 ## Setup
