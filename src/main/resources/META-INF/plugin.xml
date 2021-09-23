@@ -33,12 +33,11 @@
 
     <change-notes><![CDATA[
             <ul>
-                <li>Added new flags</li>
-                <li>Added plugin icon</li>
+                <li>Updated plugin icon</li>
             </ul>
         ]]></change-notes>
 
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 
     <depends>com.intellij.modules.platform</depends>
 
