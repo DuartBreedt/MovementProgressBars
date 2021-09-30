@@ -25,6 +25,7 @@ You can choose from:
 
 [Intelij Plugin](https://plugins.jetbrains.com/plugin/17648-movement)
 
+Originally forked from the popular [Nyan Cat Plugin](https://github.com/batya239/NyanProgressBar)!
 
 ## Setup
 - The Jetbrains Plugin can be found and installed from the Marketplace
@@ -34,6 +35,7 @@ You can choose from:
 - Requires JDK 11
 
 ## Screenshots
+<!-- TODO: Update these! -->
 ### Gay Pride
 <img src="/screenshots/Pride Indeterminate Dialog.png" />
 <img src="/screenshots/Pride Determinate Dialog.png" />
