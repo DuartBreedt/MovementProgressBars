@@ -207,7 +207,6 @@ public enum FlagColor {
     }
     ;
 
-    public static String PROPERTY_KEY = "movementFlag";
     public static FlagColor DEFAULT_VALUE = FlagColor.PRIDE;
 
     public abstract Color[] getColors();
