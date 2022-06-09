@@ -1,17 +1,22 @@
 package com.duartbreedt.movementprogressbars;
 
-import com.duartbreedt.movementprogressbars.colors.GayPride;
-import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.ui.GraphicsConfig;
 import com.intellij.ui.scale.JBUIScale;
 import com.intellij.util.ui.GraphicsUtil;
 import com.intellij.util.ui.JBUI;
 import org.jetbrains.annotations.Contract;
 
-import javax.swing.*;
+import javax.swing.JComponent;
+import javax.swing.SwingConstants;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicProgressBarUI;
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.LinearGradientPaint;
+import java.awt.Shape;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.geom.RoundRectangle2D;
@@ -122,15 +127,7 @@ public class MovementProgressBarUi extends BasicProgressBarUI {
 
     private void loadStoredColors() {
         if (colors == null || colors.length == 0) {
-            String enumValue = PropertiesComponent.getInstance().getValue(FlagColor.PROPERTY_KEY);
-            FlagColor flagColor;
-            try {
-                flagColor = (FlagColor) Class.forName(enumValue).getConstructor().newInstance();
-            } catch (Exception e) {
-                // NOOP
-                flagColor = new GayPride();
-            }
-
+            FlagColor flagColor = MovementSettingsState.getInstance().getProgressBarFlag();
             colors = flagColor.getColors();
             colorFraction = 1f / colors.length;
         }
