@@ -37,59 +37,19 @@
             </ul>
         ]]></change-notes>
 
-    <version>1.0.3</version>
+    <version>1.1.0</version>
 
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
+        <applicationService
+                serviceImplementation="com.duartbreedt.movementprogressbars.MovementSettingsState"/>
+        <applicationConfigurable
+                parentId="tools"
+                instance="com.duartbreedt.movementprogressbars.MovementConfigurable"
+                id="com.duartbreedt.movementprogressbars.MovementConfigurable"
+                displayName="Movement"/>
     </extensions>
-
-    <actions>
-
-        <group id="ViewMovementProgressBarsPlugin" text="Movement" description="Settings for Movement progress bars" popup="true" compact="true">
-            <add-to-group group-id="ViewMenu" anchor="after" relative-to-action="ViewAppearanceGroup"/>
-            <action class="com.duartbreedt.movementprogressbars.actions.SetFlagToAgenderAction" id="Movement.Actions.ChangeFlag.Agender" text="Agender"
-                    icon="/agender.svg"/>
-            <action class="com.duartbreedt.movementprogressbars.actions.SetFlagToAromanticAction" id="Movement.Actions.ChangeFlag.Aromantic"
-                    text="Aromantic"
-                    icon="/aromantic.svg"/>
-            <action class="com.duartbreedt.movementprogressbars.actions.SetFlagToAsexualAction" id="Movement.Actions.ChangeFlag.Asexual" text="Asexual"
-                    icon="/asexual.svg"/>
-            <action class="com.duartbreedt.movementprogressbars.actions.SetFlagToBigenderAction" id="Movement.Actions.ChangeFlag.Bigender" text="Bigender"
-                    icon="/bigender.svg"/>
-            <action class="com.duartbreedt.movementprogressbars.actions.SetFlagToBisexualAction" id="Movement.Actions.ChangeFlag.Bisexual" text="Bisexual"
-                    icon="/bisexual.svg"/>
-            <action class="com.duartbreedt.movementprogressbars.actions.SetFlagToGayMenAction" id="Movement.Actions.ChangeFlag.GayMen" text="Gay Men"
-                    icon="/gay_men.svg"/>
-            <action class="com.duartbreedt.movementprogressbars.actions.SetFlagToGayPrideAction" id="Movement.Actions.ChangeFlag.GayPride" text="Gay Pride"
-                    icon="/gay_pride.svg"/>
-            <action class="com.duartbreedt.movementprogressbars.actions.SetFlagToGenderfluidAction" id="Movement.Actions.ChangeFlag.Genderfluid"
-                    text="Genderfluid"
-                    icon="/genderfluid.svg"/>
-            <action class="com.duartbreedt.movementprogressbars.actions.SetFlagToGenderqueerAction" id="Movement.Actions.ChangeFlag.Genderqueer"
-                    text="Genderqueer"
-                    icon="/genderqueer.svg"/>
-            <action class="com.duartbreedt.movementprogressbars.actions.SetFlagToLesbianAction" id="Movement.Actions.ChangeFlag.Lesbian" text="Lesbian"
-                    icon="/lesbian.svg"/>
-            <action class="com.duartbreedt.movementprogressbars.actions.SetFlagToNonBinaryAction" id="Movement.Actions.ChangeFlag.NonBinary" text="Non-Binary"
-                    icon="/nonbinary.svg"/>
-            <action class="com.duartbreedt.movementprogressbars.actions.SetFlagToPansexualAction" id="Movement.Actions.ChangeFlag.Pansexual" text="Pansexual"
-                    icon="/pansexual.svg"/>
-            <action class="com.duartbreedt.movementprogressbars.actions.SetFlagToPolysexualAction" id="Movement.Actions.ChangeFlag.Polysexual" text="Polysexual"
-                    icon="/polysexual.svg"/>
-            <action class="com.duartbreedt.movementprogressbars.actions.SetFlagToTransgenderAction" id="Movement.Actions.ChangeFlag.Transgender"
-                    text="Transgender"
-                    icon="/transgender.svg"/>
-            <separator/>
-            <action class="com.duartbreedt.movementprogressbars.actions.SetFlagToBearBrotherhoodAction" id="Movement.Actions.ChangeFlag.BearBrotherhood"
-                    text="Bear Brotherhood" icon="/bear_brotherhood.svg"/>
-            <action class="com.duartbreedt.movementprogressbars.actions.SetFlagToLeatherAction" id="Movement.Actions.ChangeFlag.Leather" text="Leather"
-                    icon="/leather.svg"/>
-            <action class="com.duartbreedt.movementprogressbars.actions.SetFlagToLipstickLesbianAction" id="Movement.Actions.ChangeFlag.LipstickLesbian"
-                    text="Lipstick Lesbian" icon="/lipstick_lesbian.svg"/>
-
-        </group>
-    </actions>
 
     <application-components>
         <component>
