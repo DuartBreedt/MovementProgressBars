@@ -33,7 +33,8 @@
 
     <change-notes><![CDATA[
             <ul>
-                <li>Ported the plugin to older IDE versions</li>
+                <li>Support for newer versions.</li>
+                <li>Set progress bar color from settings</li>
             </ul>
         ]]></change-notes>
 

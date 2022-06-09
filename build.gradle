@@ -21,6 +21,7 @@ intellij {
 
 patchPluginXml {
     changeNotes = """
+      <em>1.1.0 Support for newer versions. Set progress bar color from settings.</em>
       <em>1.0.3 Ported the plugin to older IDE versions</em><br>
       <em>1.0.2 Updated the plugin icon</em><br>
       <em>1.0.1 Added more flags + plugin icon</em><br>
