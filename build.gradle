@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.duartbreedt.movementprogressbars'
-version '1.0.3'
+version '1.0.4'
 
 repositories {
     mavenCentral()
@@ -20,7 +20,10 @@ intellij {
 }
 
 patchPluginXml {
+    sinceBuild = '201'
+    untilBuild = ''
     changeNotes = """
+      <em>1.0.4 Open-ended IDE version for wider availability</em><br>
       <em>1.0.3 Ported the plugin to older IDE versions</em><br>
       <em>1.0.2 Updated the plugin icon</em><br>
       <em>1.0.1 Added more flags + plugin icon</em><br>
