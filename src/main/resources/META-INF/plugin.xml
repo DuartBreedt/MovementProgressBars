@@ -37,7 +37,7 @@
             </ul>
         ]]></change-notes>
 
-    <version>1.0.4</version>
+    <version>1.0.5</version>
 
     <depends>com.intellij.modules.platform</depends>
 
