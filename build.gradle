@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.duartbreedt.movementprogressbars'
-version '1.0.4'
+version '1.0.4-as'
 
 repositories {
     mavenCentral()

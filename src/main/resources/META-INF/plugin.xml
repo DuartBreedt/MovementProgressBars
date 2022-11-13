@@ -33,11 +33,11 @@
 
     <change-notes><![CDATA[
             <ul>
-                <li>Added support for Android Studio</li>
+                <li>Open-ended IDE version for wider availability</li>
             </ul>
         ]]></change-notes>
 
-    <version>1.0.4</version>
+    <version>1.0.4-as</version>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.android</depends>
