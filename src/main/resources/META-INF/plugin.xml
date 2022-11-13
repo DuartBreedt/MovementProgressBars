@@ -37,7 +37,7 @@
             </ul>
         ]]></change-notes>
 
-    <version>1.0.4-as</version>
+    <version>1.0.5-as</version>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.android</depends>
