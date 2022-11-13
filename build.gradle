@@ -17,6 +17,8 @@ dependencies {
 
 intellij {
     version = '2020.1'
+    type = 'IC'
+    plugins = ['android']
 }
 
 patchPluginXml {
@@ -42,4 +44,9 @@ signPlugin {
 
 publishPlugin {
     token = System.getenv("PUBLISH_TOKEN")
+}
+
+runIde {
+    jvmArgs("-Didea.platform.prefix=AndroidStudio")
+    ideDir = file('D:\\Program Files\\Android\\Android Studio')
 }

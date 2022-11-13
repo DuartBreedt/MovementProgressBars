@@ -33,13 +33,14 @@
 
     <change-notes><![CDATA[
             <ul>
-                <li>Ported the plugin to older IDE versions</li>
+                <li>Added support for Android Studio</li>
             </ul>
         ]]></change-notes>
 
-    <version>1.0.3</version>
+    <version>1.0.4</version>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>org.jetbrains.android</depends>
 
     <extensions defaultExtensionNs="com.intellij">
     </extensions>
