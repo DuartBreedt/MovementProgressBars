@@ -33,7 +33,7 @@
 
     <change-notes><![CDATA[
             <ul>
-                <li>Ported the plugin to older IDE versions</li>
+                <li>Open-ended IDE version for wider availability</li>
             </ul>
         ]]></change-notes>
 
