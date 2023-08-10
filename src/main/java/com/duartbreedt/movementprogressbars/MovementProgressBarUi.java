@@ -1,6 +1,6 @@
 package com.duartbreedt.movementprogressbars;
 
-import com.duartbreedt.movementprogressbars.colors.GayPride;
+import com.duartbreedt.movementprogressbars.colors.*;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.ui.GraphicsConfig;
 import com.intellij.ui.scale.JBUIScale;
@@ -16,7 +16,10 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.nio.FloatBuffer;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.LinkedList;
+import java.util.Random;
 
 public class MovementProgressBarUi extends BasicProgressBarUI {
 
@@ -33,6 +36,29 @@ public class MovementProgressBarUi extends BasicProgressBarUI {
 
     private Color[] colors;
     private float colorFraction;
+
+    private String[] flagColours = new String[]{
+            Agender.class.getName(),
+            Aromantic.class.getName(),
+            Asexual.class.getName(),
+            BearBrotherhood.class.getName(),
+            Bigender.class.getName(),
+            Bisexual.class.getName(),
+            GayMen.class.getName(),
+            GayPride.class.getName(),
+            Genderfluid.class.getName(),
+            Genderqueer.class.getName(),
+            Leather.class.getName(),
+            Lesbian.class.getName(),
+            LipstickLesbian.class.getName(),
+            NonBinary.class.getName(),
+            Pansexual.class.getName(),
+            Polysexual.class.getName(),
+            Transgender.class.getName()
+    };
+
+    private Instant lastShuffleTime = null;
+    private final Duration minTimeBetweenShuffles = Duration.ofSeconds(3);
 
     @Contract("_ -> new")
     @SuppressWarnings({"UnusedDeclaration"})
@@ -121,8 +147,15 @@ public class MovementProgressBarUi extends BasicProgressBarUI {
     }
 
     private void loadStoredColors() {
+        String enumValue = PropertiesComponent.getInstance().getValue(FlagColor.PROPERTY_KEY);
+
+        if ("Shuffle".equals(enumValue) && (lastShuffleTime == null || hasTimeElapsed(lastShuffleTime, minTimeBetweenShuffles))) {
+            lastShuffleTime = Instant.now();
+            enumValue = flagColours[new Random().nextInt(flagColours.length)];
+            colors = null;
+        }
+
         if (colors == null || colors.length == 0) {
-            String enumValue = PropertiesComponent.getInstance().getValue(FlagColor.PROPERTY_KEY);
             FlagColor flagColor;
             try {
                 flagColor = (FlagColor) Class.forName(enumValue).getConstructor().newInstance();
@@ -175,6 +208,17 @@ public class MovementProgressBarUi extends BasicProgressBarUI {
 
     public static float clamp(float val, float min, float max) {
         return Math.max(min, Math.min(max, val));
+    }
+
+    private boolean hasTimeElapsed(Instant earlier, Duration difference) {
+        return hasTimeElapsed(earlier, Instant.now(), difference);
+    }
+
+    private boolean hasTimeElapsed(Instant earlier, Instant later, Duration difference) {
+        return Duration.between(
+                earlier,
+                later
+        ).compareTo(difference) > 0;
     }
 }
 
