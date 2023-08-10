@@ -87,6 +87,8 @@
                     icon="/leather.svg"/>
             <action class="com.duartbreedt.movementprogressbars.actions.SetFlagToLipstickLesbianAction" id="Movement.Actions.ChangeFlag.LipstickLesbian"
                     text="Lipstick Lesbian" icon="/lipstick_lesbian.svg"/>
+            <action class="com.duartbreedt.movementprogressbars.actions.SetFlagToShuffleAction" id="Movement.Actions.ChangeFlag.Random"
+                    text="Shuffle" icon="/gay_pride.svg"/>
 
         </group>
     </actions>
