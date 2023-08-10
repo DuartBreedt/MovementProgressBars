@@ -28,6 +28,7 @@
         <li>Bear Brotherhood</li>
         <li>Leather</li>
         <li>Lipstick Lesbian</li>
+        <li>Shuffle!</li>
     </ul>
     ]]></description>
 
@@ -37,7 +38,7 @@
             </ul>
         ]]></change-notes>
 
-    <version>1.0.5</version>
+    <version>1.0.6</version>
 
     <depends>com.intellij.modules.platform</depends>
 
